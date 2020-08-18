@@ -47,7 +47,7 @@
             $profilePic = "assets/images/profile-pics/dr_renert.png";
             $date = date("Y-m-d");
 
-            $result = $this->pdo->query("INSERT INTO users VALUES ('', '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
+            $result = $this->pdo->query("INSERT INTO users(username, firstName, lastName, email, password, signUpDate, profilePic) VALUES($un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
             return $result;
         }
 

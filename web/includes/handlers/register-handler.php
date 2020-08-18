@@ -20,6 +20,8 @@ if(isset($_POST['registerButton'])){
     if($wasSuccessful){
         $_SESSION['userLoggedIn'] = $username;
         header("Location: index.php");
+    } else {
+        // Registration failed
     }
 }
 
