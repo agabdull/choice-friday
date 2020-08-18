@@ -1,25 +1,26 @@
 <?php
 
-require('../vendor/autoload.php');
+include("includes/config.php");
 
-$app = new Silex\Application();
-$app['debug'] = true;
+// manual logout
+session_destroy();
 
-// Register the monolog logging service
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
-  'monolog.logfile' => 'php://stderr',
-));
+if(isset($_SESSION['userLoggedIn'])){
+    $userLoggedIn = $_SESSION['userLoggedIn'];
+} else {
+    //header("Location: register.php");
+}
 
-// Register view rendering
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
+?>
 
-// Our web handlers
-
-$app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging output.');
-  return $app['twig']->render('index.twig');
-});
-
-$app->run();
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choice Friday</title>
+</head>
+<body>
+    Hello, <!--<?php echo $userLoggedIn?> -->.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
+    Welcome to paradise.
+</body>
+</html>

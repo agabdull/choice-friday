@@ -1,0 +1,20 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: 'Vollkorn', serif;
+}
+
+#background {
+    background-color: #000000;
+    background-image: url("../images/background-register-image.jpg");
+    background-position: center;
+    background-size: cover;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+#loginContainer * {
+    color: black;
+}
