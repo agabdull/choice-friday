@@ -18,9 +18,12 @@ if(isset($_SESSION['userLoggedIn'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choice Friday</title>
+    <script src="assets/js/scripts.js"></script>
 </head>
 <body>
-    Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
-    Welcome to paradise.
+    <button class="button" onclick="logout()">LOG OUT</button>
+
+    <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
+    Welcome to paradise. </p>
 </body>
 </html>
