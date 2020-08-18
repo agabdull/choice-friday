@@ -3,7 +3,7 @@
 include("includes/config.php");
 
 // manual logout
-session_destroy();
+//session_destroy();
 
 if(isset($_SESSION['userLoggedIn'])){
     $userLoggedIn = $_SESSION['userLoggedIn'];
@@ -20,7 +20,7 @@ if(isset($_SESSION['userLoggedIn'])){
     <title>Choice Friday</title>
 </head>
 <body>
-    Hello, <!--<?php echo $userLoggedIn?> -->.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
+    Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
     Welcome to paradise.
 </body>
 </html>

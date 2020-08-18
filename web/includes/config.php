@@ -25,7 +25,7 @@
 ));
 
 if($db){
-    echo "Connected <br />".$db;
+    //echo "Connected <br />".$db;
   }else {
     echo "Not connected";
   }
