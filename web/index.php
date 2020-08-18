@@ -3,7 +3,7 @@
 include("includes/config.php");
 
 // manual logout
-//session_destroy();
+session_destroy();
 
 if(isset($_SESSION['userLoggedIn'])){
     $userLoggedIn = $_SESSION['userLoggedIn'];

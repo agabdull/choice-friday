@@ -22,6 +22,7 @@ if(isset($_POST['registerButton'])){
         header("Location: index.php");
     } else {
         // Registration failed
+        echo "REGISTRATION FAILED.  LIFE IS FULL OF DISSAPOINTMENTS.";
     }
 }
 
