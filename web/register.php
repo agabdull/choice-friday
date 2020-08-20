@@ -23,7 +23,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Choice Friday - Login or Sign up!</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Vollkorn">
     <link rel="stylesheet" href="assets/css/register.css">
 </head>

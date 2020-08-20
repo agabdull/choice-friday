@@ -17,4 +17,6 @@ html, body {
 
 #loginContainer * {
     color: black;
+    line-height: 1em;
+    box-sizing: border-box;
 }
