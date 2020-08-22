@@ -2,6 +2,6 @@ RewriteEngine On
 RewriteBase /
 RewriteCond %{HTTPS} !=on
 RewriteCond %{SERVER_PORT} ^80
-RewriteCond %{HTTP_HOST} ^www\.domainname\.com$ [NC]
+RewriteCond %{HTTP_HOST} ^www\.choicefriday\.com$ [NC]
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteRule ^index\.php$ - [L]
