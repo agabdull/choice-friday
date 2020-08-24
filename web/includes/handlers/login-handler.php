@@ -15,7 +15,7 @@ if(isset($_POST['loginButton'])){
         $userGrade = $pdo->query("SELECT fName FROM users WHERE email='$email'");
         $all = $pdo->query("SELECT * FROM users WHERE email='$email'");
         //$_SESSION['all'] = $all;
-        $_SESSION['userGrade'] = $userGrade->fetch("PDO::FETCH_ASSOC")['fName'];
+        $_SESSION['userGrade'] = $userGrade->fetch("PDO::FETCH_ASSOC");
         $_SESSION['session_var'] = "this is sample text for our session variable";
         header("Location: index.php");
     }
