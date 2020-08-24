@@ -7,6 +7,7 @@ include("includes/config.php");
 
 if(isset($_SESSION['userLoggedIn'])){
     $userLoggedIn = $_SESSION['userLoggedIn'];
+    $test = $_SESSION['session_var'];
     //$userGrade = $_SESSION['userGrade'];
     //$all = $_SESSION['all'];
 } else {
@@ -28,6 +29,6 @@ if(isset($_SESSION['userLoggedIn'])){
 
     <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
     Welcome to paradise.  You are in grade <?php // echo $userGrade?>.  Heres: <?php //echo $all?>. queries back in, 
-    i am a frustration </p>
+    i am a frustration.  Here's our message from before: <?php echo $test?> </p>
 </body>
 </html>
