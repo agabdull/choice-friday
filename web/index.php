@@ -28,7 +28,7 @@ if(isset($_SESSION['userLoggedIn'])){
     <button class="button" onclick="logout()">LOG OUT</button>
 
     <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
-    Welcome to paradise.  You are in grade <?php print_r($userGrade)?>.  Heres: <?php //echo $all?>. queries back in, 
+    Welcome to paradise.  You are in grade <?php echo gettype($userGrade); print_r($userGrade);?>.  Heres: <?php //echo $all?>. queries back in, 
     i am a frustration.  Here's our message from before: <?php echo $test?>.  Now we're trying to use fetch in order to set
     our desired session variable to something sensical.  Oh shizzz it didn't crash, so now let's uncomment the lines where we try to
     display our session variable value! try array</p>
