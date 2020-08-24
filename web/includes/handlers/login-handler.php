@@ -12,8 +12,8 @@ if(isset($_POST['loginButton'])){
 
         //$userGrade = intval(($pdo->query("SELECT grade FROM users WHERE email='$email';"))->fetchAll()['grade']);
 
-        $userGrade = $pdo->query("SELECT fName FROM users WHERE email='$email'");
-        $all = $pdo->query("SELECT * FROM users WHERE email='$email'");
+        $userGrade = $account->$pdo->query("SELECT fName FROM users WHERE email='$email'");
+        $all = $account->$pdo->query("SELECT * FROM users WHERE email='$email'");
         //$_SESSION['all'] = $all;
         $_SESSION['userGrade'] = $userGrade;
         $_SESSION['session_var'] = "this is sample text for our session variable";
