@@ -29,6 +29,7 @@ if(isset($_SESSION['userLoggedIn'])){
 
     <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
     Welcome to paradise.  You are in grade <?php // echo $userGrade?>.  Heres: <?php //echo $all?>. queries back in, 
-    i am a frustration.  Here's our message from before: <?php echo $test?> </p>
+    i am a frustration.  Here's our message from before: <?php echo $test?>.  Now we're trying to use fetch in order to set
+    our desired session variable to something sensical. </p>
 </body>
 </html>
