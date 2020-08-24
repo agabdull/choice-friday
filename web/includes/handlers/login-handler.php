@@ -9,6 +9,9 @@ if(isset($_POST['loginButton'])){
 
     if($result){
         $_SESSION['userLoggedIn'] = $email;
+
+        $userGrade = intval(($pdo->query("SELECT grade FROM users WHERE email='$email';"))['grade']);
+        $_SESSION['userGrade'] = $userGrade;
         header("Location: index.php");
     }
 }

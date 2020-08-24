@@ -4,8 +4,6 @@
     ob_start();
     session_start();
 
-    $timezone = date_default_timezone_set("America/Edmonton");
-
     /*$con = pg_connect(getenv("DATABASE_URL"));
     $stat = pg_connection_status($con);
 

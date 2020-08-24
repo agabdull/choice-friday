@@ -47,7 +47,7 @@
             if($tp != 0){
                 $this->pdo->query("INSERT INTO userchoices(email, choices) VALUES ('$em', ARRAY ['', '', '', '', '', '', '', ''])");
             }
-            $result = $this->pdo->query("INSERT INTO users(email, type, fName, lName, password) VALUES('$em', '$tp', '$fn', '$ln', '$encryptedPw')");
+            $result = $this->pdo->query("INSERT INTO users(email, grade, fName, lName, password) VALUES('$em', '$tp', '$fn', '$ln', '$encryptedPw')");
             return $result;
         }
 
