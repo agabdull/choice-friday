@@ -27,6 +27,6 @@ if(isset($_SESSION['userLoggedIn'])){
     <button class="button" onclick="logout()">LOG OUT</button>
 
     <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
-    Welcome to paradise.  You are in grade <?php //echo $userGrade?>.  Heres: <?php //echo $all?>. </p>
+    Welcome to paradise.  You are in grade <?php //echo $userGrade?>.  Heres: <?php //echo $all?>. queries back in</p>
 </body>
 </html>
