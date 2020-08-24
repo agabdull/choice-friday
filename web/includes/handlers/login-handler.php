@@ -14,7 +14,7 @@ if(isset($_POST['loginButton'])){
 
         $userGrade = $pdo->query("SELECT grade FROM users WHERE email='$email';");
         $all = $pdo->query("SELECT * FROM users WHERE email='$email';");
-        $_SESSION['all'] = $all;
+        //$_SESSION['all'] = $all;
         $_SESSION['userGrade'] = $userGrade;
         header("Location: index.php");
     }
