@@ -27,7 +27,7 @@ function getInputValue($name){
 
 if(isset($_POST['addButton'])){
     $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
-    $admin = $userEmail;
+    $admin = "jessiejeffs@gmail.com";  //hard-coded to test
     $description = strip_tags($_POST['addDescription']);
     $period = $_POST['addPeriod'];
     $minGrade = $_POST['minGrade'];
