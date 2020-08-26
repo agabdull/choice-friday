@@ -17,7 +17,7 @@ if(isset($_SESSION['userEmail'])){
     $userFirstName = $_SESSION['userFirstName'];
 
     if ($userGrade == 0){
-       // header("Location: instructor.php");
+       header("Location: instructor.php");
     }
 
 } else {
