@@ -7,10 +7,10 @@ include("includes/config.php");
 
 if(isset($_SESSION['userEmail'])){
     $userEmail = $_SESSION['userEmail'];
-    $query = $pdo->query("SELECT grade, fName FROM users WHERE email='$userEmail'");
+    $query = $pdo->query("SELECT grade, fname FROM users WHERE email='$userEmail'");
     $row = $query->fetch(PDO::FETCH_ASSOC);
     $userGrade = $row['grade'];
-    $userFirstName = $row['fName'];
+    $userFirstName = $row['fname'];
 
 } else {
     header("Location: register.php");
