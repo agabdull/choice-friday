@@ -27,9 +27,9 @@ function getInputValue($name){
 
 if(isset($_POST['addButton'])){
     //echo "form submitted";
-    $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
+    $title = pg_escape_string(strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']));
     $admin = $userEmail;
-    $description = strip_tags($_POST['addDescription']);
+    $description = pg_escape_string(strip_tags($_POST['addDescription']));
     $period = $_POST['addPeriod'];
     $minGrade = $_POST['minGrade'];
     $maxGrade = $_POST['maxGrade'];
