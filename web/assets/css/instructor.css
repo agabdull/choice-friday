@@ -1,0 +1,51 @@
+.choiceBox {
+    background: rgba(0,0,0,0.2);
+    max-width: 30em;
+    color: pink;
+    border: 0.2em solid gray;
+    margin: auto;
+    padding: 0.4em;
+  }
+  
+  body{
+      background: #0F3D5E;
+    }
+    .container{
+      max-width: 95%;
+    }
+    input[type=email],
+    input[type=email]:focus,
+    input[type=text],
+    input[type=text]:focus,
+    input[type=password],
+    input[type=password]:focus{
+      color: #fff;
+      border: none;
+      background: rgba(0,0,0,0.2);
+      max-width: 30em;
+    }
+  
+    
+  
+    .submitter {
+      background: #1D74B4;
+      color: white;
+      border: none;
+      border-radius: 0.3em;
+      padding: 0.5em;
+      width: 8em;
+    }
+  
+    .errormsg{
+      color: red;
+    }
+  
+    p, label, div{
+      color: gray;
+    }
+  
+    .extras {
+      max-width: 30em;
+      text-align: left;
+      margin: auto;
+    }
