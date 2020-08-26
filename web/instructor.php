@@ -38,8 +38,12 @@ if(isset($_POST['addButton'])){
     if($minGrade > $maxGrade){
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
-        $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
-        ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
+        //$result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
+        //('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
+
+        echo $title . $admin . $description . $period . $minGrade . $maxGrade;
+
+        $result = true;
 
         if($result){
             $submitMessage = "SUCCESS!";
