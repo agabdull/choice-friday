@@ -19,7 +19,7 @@ if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SES
 $submitMessage = "";
     
 function getInputValue($name){
-    if(isset($_POST[$name])){
+    if(isset($_POST[$name]) && $submitMessage != "SUCCESS"){ // clear form on successes
         echo $_POST[$name];
     }
 }
@@ -65,7 +65,7 @@ if(isset($_POST['addButton'])){
     <script src="assets/js/scripts.js"></script>
 </head>
 <body>
-    <button id="logoutButton"class="button" onclick="logout()">LOG OUT</button>
+    <button id="logoutButton"class="button" onclick="logout()">Log out</button>
 
     <!--<p>Hello, <?php echo $userFirstName?>. You are an instructor, and your email address is <?php echo $userEmail?> </p> -->
 
