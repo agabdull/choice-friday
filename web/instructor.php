@@ -1,6 +1,6 @@
 <?php
 
-include("includes/config.php");
+//include("includes/config.php");
 
 if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SESSION['userFirstName'])){
     if($_SESSION['userGrade'] != 0){  // Kid is trying to gain admin privileges unlawfully
@@ -26,7 +26,9 @@ function getInputValue($name){
 
 
 if(isset($_POST['addButton'])){
-    $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
+    echo "form submitted";
+    $title = //strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
+             "eating cheese";
     $admin = "jessiejeffs@gmail.com";  //hard-coded to test
     $description = strip_tags($_POST['addDescription']);
     $period = $_POST['addPeriod'];
