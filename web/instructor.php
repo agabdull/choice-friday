@@ -26,7 +26,7 @@ function getInputValue($name){
 
 
 if(isset($_POST['addButton'])){
-    echo "form submitted";
+    //echo "form submitted";
     $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
     $admin = $userEmail;
     $description = strip_tags($_POST['addDescription']);
@@ -42,7 +42,7 @@ if(isset($_POST['addButton'])){
         $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
         ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
 
-        //echo $title . $admin . $description . $period . $minGrade . $maxGrade;
+        echo $title . $admin . $description . $period . $minGrade . $maxGrade;
 
         if($result){
             $submitMessage = "SUCCESS!";
