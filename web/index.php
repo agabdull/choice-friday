@@ -7,8 +7,15 @@ include("includes/config.php");
 
 if(isset($_SESSION['userLoggedIn'])){
     $userLoggedIn = $_SESSION['userLoggedIn'];
-    $test = $_SESSION['session_var'];
-    $userGrade = $_SESSION['userGrade'];
+
+    $query = $pdo->query("SELECT grade FROM users WHERE email='$userLoggedIn'");
+    if (!$query){
+        echo "query failed";
+    } else {
+        echo "query success";
+    }
+    //$test = $_SESSION['session_var'];
+    //$userGrade = $_SESSION['userGrade'];
     //$all = $_SESSION['all'];
 } else {
     header("Location: register.php");
@@ -27,11 +34,6 @@ if(isset($_SESSION['userLoggedIn'])){
 <body>
     <button class="button" onclick="logout()">LOG OUT</button>
 
-    <p>Hello, <?php echo $userLoggedIn?>.  I am Dr. Moshe Renert, Founder of the Renert School and Creator of the Choice Friday System.  
-    Welcome to paradise.  You are in grade <?php echo gettype($userGrade); print_r($userGrade);?>.  Heres: <?php //echo $all?>. queries back in, 
-    i am a frustration.  Here's our message from before: <?php echo $test?>.  Now we're trying to use fetch in order to set
-    our desired session variable to something sensical.  Oh shizzz it didn't crash, so now let's uncomment the lines where we try to
-    display our session variable value! try array, oh no it turns out that the fetch command failed; now let's check types to see whether the
-    pdo query worked or if everything was messed up form the beginning omfg</p>
+    <p>Hello, <?php echo $userLoggedIn?>.  </p>
 </body>
 </html>
