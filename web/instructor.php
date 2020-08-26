@@ -65,7 +65,7 @@ if(isset($_POST['addButton'])){
     <script src="assets/js/scripts.js"></script>
 </head>
 <body>
-    <button class="button" onclick="logout()">LOG OUT</button>
+    <button id="logoutButton"class="button" onclick="logout()">LOG OUT</button>
 
     <!--<p>Hello, <?php echo $userFirstName?>. You are an instructor! Your email address is <?php echo $userEmail?> </p> -->
 
