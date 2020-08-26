@@ -8,7 +8,7 @@ if(isset($_POST['loginButton'])){
     $result = $account->login($email, $password);
 
     if($result){
-        $_SESSION['userLoggedIn'] = $email;
+        $_SESSION['userEmail'] = $email;
         header("Location: index.php");
     }
 }

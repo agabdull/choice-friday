@@ -6,26 +6,11 @@ include("includes/config.php");
 // session_destroy();
 
 if(isset($_SESSION['userLoggedIn'])){
-    $userLoggedIn = $_SESSION['userLoggedIn'];
-
-    $query = $pdo->query("SELECT grade FROM users WHERE email='$userLoggedIn'");
-    if (!$query){
-        echo "query failed";
-    } else {
-        echo "query success";
-    }
-    
+    $userEmail = $_SESSION['userEmail'];
+    $query = $pdo->query("SELECT grade, fName FROM users WHERE email='$userEmail'");
     $row = $query->fetch(PDO::FETCH_ASSOC);
-
-    if (!$row){
-        echo "fetch failed";
-    } else {
-        echo "fetch success";
-    }
-
-    $grade = $row['grade'];
-
-    echo $grade;
+    $userGrade = $row['grade'];
+    $userFirstName = $row['fName'];
 
 } else {
     header("Location: register.php");
@@ -44,6 +29,6 @@ if(isset($_SESSION['userLoggedIn'])){
 <body>
     <button class="button" onclick="logout()">LOG OUT</button>
 
-    <p>Hello, <?php echo $userLoggedIn?>.  </p>
+    <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
 </body>
 </html>
