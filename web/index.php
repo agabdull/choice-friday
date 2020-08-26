@@ -5,7 +5,7 @@ include("includes/config.php");
 // manual logout
 // session_destroy();
 
-if(isset($_SESSION['userLoggedIn'])){
+if(isset($_SESSION['userEmail'])){
     $userEmail = $_SESSION['userEmail'];
     $query = $pdo->query("SELECT grade, fName FROM users WHERE email='$userEmail'");
     $row = $query->fetch(PDO::FETCH_ASSOC);
