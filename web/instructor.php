@@ -40,7 +40,7 @@ if(isset($_POST['addButton'])){
         $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
         ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', array[]::text[])");
 
-        echo $title . $admin . $description . $period . $minGrade . $maxGrade;
+        //echo $title . $admin . $description . $period . $minGrade . $maxGrade;
 
         if($result){
             $submitMessage = "SUCCESS!";
