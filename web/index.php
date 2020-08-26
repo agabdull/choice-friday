@@ -14,9 +14,19 @@ if(isset($_SESSION['userLoggedIn'])){
     } else {
         echo "query success";
     }
-    //$test = $_SESSION['session_var'];
-    //$userGrade = $_SESSION['userGrade'];
-    //$all = $_SESSION['all'];
+    
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row){
+        echo "fetch failed";
+    } else {
+        echo "fetch success";
+    }
+
+    $grade = $row['grade'];
+
+    echo $grade;
+
 } else {
     header("Location: register.php");
 }
