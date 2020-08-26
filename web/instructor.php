@@ -9,6 +9,8 @@ if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SES
         $userEmail = $_SESSION['userEmail'];
         $userFirstName = $_SESSION['userFirstName'];
     }
+} else {
+    header("Location: register.php");
 }
 
     
