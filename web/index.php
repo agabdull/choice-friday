@@ -7,6 +7,12 @@ include("includes/config.php");
 
 if(isset($_SESSION['userEmail'])){
     $userEmail = $_SESSION['userEmail'];
+
+    $query = $pdo->query("SELECT grade, fname FROM users WHERE email='$userEmail'");
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['userGrade'] = $row['grade'];
+    $_SESSION['userFirstName'] = $row['fname'];
+
     $userGrade = $_SESSION['userGrade'];
     $userFirstName = $_SESSION['userFirstName'];
 

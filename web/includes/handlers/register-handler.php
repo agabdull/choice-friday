@@ -19,8 +19,6 @@ if(isset($_POST['registerButton'])){
 
     if($wasSuccessful){
         $_SESSION['userEmail'] = $email;
-        $_SESSION['userGrade'] = $grade;
-        $_SESSION['userFirstName'] = $firstName;
         header("Location: index.php");
     } else {
         // Registration failed
