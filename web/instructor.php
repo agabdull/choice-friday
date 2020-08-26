@@ -1,6 +1,6 @@
 <?php
 
-//include("includes/config.php");
+include("includes/config.php");
 
 if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SESSION['userFirstName'])){
     if($_SESSION['userGrade'] != 0){  // Kid is trying to gain admin privileges unlawfully
@@ -27,9 +27,8 @@ function getInputValue($name){
 
 if(isset($_POST['addButton'])){
     echo "form submitted";
-    $title = //strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
-             "eating cheese";
-    $admin = "jessiejeffs@gmail.com";  //hard-coded to test
+    $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
+    $admin = $userEmail;
     $description = strip_tags($_POST['addDescription']);
     $period = $_POST['addPeriod'];
     $minGrade = $_POST['minGrade'];
@@ -40,12 +39,10 @@ if(isset($_POST['addButton'])){
     if($minGrade > $maxGrade){
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
-        //$result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
-        //('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
+        $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
+        ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
 
-        echo $title . $admin . $description . $period . $minGrade . $maxGrade;
-
-        $result = true;
+        //echo $title . $admin . $description . $period . $minGrade . $maxGrade;
 
         if($result){
             $submitMessage = "SUCCESS!";
@@ -83,7 +80,7 @@ if(isset($_POST['addButton'])){
         
 
 
-        <form class="text-center my-4" id="addChoiceForm" action="index.php" method="POST">
+        <form class="text-center my-4" id="addChoiceForm" action="register.php" method="POST">
 
         <div class="choiceBox">
             <p>
