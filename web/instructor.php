@@ -80,7 +80,7 @@ if(isset($_POST['addButton'])){
         
 
 
-        <form class="text-center my-4" id="addChoiceForm" action="register.php" method="POST">
+        <form class="text-center my-4" id="addChoiceForm" action="instructor.php" method="POST">
 
         <div class="choiceBox">
             <p>
