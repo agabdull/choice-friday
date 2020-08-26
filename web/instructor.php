@@ -27,7 +27,7 @@ function getInputValue($name){
 
 if(isset($_POST['addButton'])){
     $title = strip_tags($_POST['addTitle'] . " with " . $_POST['addInstructors']);
-    $admin = "jessiejeffs@gmail.com";//hard-coded to test
+    $admin = $userEmail;
     $description = strip_tags($_POST['addDescription']);
     $period = $_POST['addPeriod'];
     $minGrade = $_POST['minGrade'];
@@ -38,10 +38,8 @@ if(isset($_POST['addButton'])){
     if($minGrade > $maxGrade){
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
-        //$result = $pdo->query("INSERT INTO choices(title, admin, description, period, minGrade, maxGrade, students) VALUES
-        //('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
-
-        $result = true;
+        $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
+        ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', ARRAY[]::text[])");
 
         if($result){
             $submitMessage = "SUCCESS!";
