@@ -102,8 +102,8 @@
 
                 <p>
                     <p class='errormsg'> <?php echo $account->getError(Constants::$gradeError);?> </p>
-                    <input class="form-control m-auto" id="type" name="type" type="text"
-                     value="<?php echo getInputValue('type');?>" placeholder="Grade (Number between 1-12)"required>
+                    <input class="form-control m-auto" id="grade" name="grade" type="text"
+                     value="<?php echo getInputValue('grade');?>" placeholder="Grade (Number between 1-12)"required>
                 </p>
 
 

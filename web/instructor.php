@@ -2,21 +2,16 @@
 
 include("includes/config.php");
 
-// manual logout
-// session_destroy();
-
-if(isset($_SESSION['userEmail'])){
-    $userEmail = $_SESSION['userEmail'];
-    $userGrade = $_SESSION['userGrade'];
-    $userFirstName = $_SESSION['userFirstName'];
-
-    if ($userGrade == 0){
-        header("Location: instructor.php");
+if($_SESSION['userEmail'] && $_SESSION['userGrade'] && $_SESSION['userFirstName']){
+    if($_SESSION['userGrade'] != 0){  // Kid is trying to gain admin privileges unlawfully
+        header("Location: index.php");
+    } else {
+        $userEmail = $_SESSION['userEmail'];
+        $userFirstName = $_SESSION['userFirstName'];
     }
-
-} else {
-    header("Location: register.php");
 }
+
+    
 
 ?>
 
@@ -31,6 +26,6 @@ if(isset($_SESSION['userEmail'])){
 <body>
     <button class="button" onclick="logout()">LOG OUT</button>
 
-    <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
+    <p>Hello, <?php echo $userFirstName?>. You are an instructor! Your email address is <?php echo $userEmail?> </p>
 </body>
 </html>

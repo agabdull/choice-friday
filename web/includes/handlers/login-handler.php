@@ -9,6 +9,11 @@ if(isset($_POST['loginButton'])){
 
     if($result){
         $_SESSION['userEmail'] = $email;
+
+        $query = $pdo->query("SELECT grade, fname FROM users WHERE email='$userEmail'");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['userGrade'] = $row['grade'];
+        $_SESSION['userFirstName'] = $row['fname'];
         header("Location: index.php");
     }
 }
