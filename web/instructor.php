@@ -2,7 +2,7 @@
 
 include("includes/config.php");
 
-if($_SESSION['userEmail'] && $_SESSION['userGrade'] && $_SESSION['userFirstName']){
+if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SESSION['userFirstName'])){
     if($_SESSION['userGrade'] != 0){  // Kid is trying to gain admin privileges unlawfully
         header("Location: index.php");
     } else {
