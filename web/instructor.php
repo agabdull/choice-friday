@@ -19,7 +19,7 @@ if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SES
 $submitMessage = "";
     
 function getInputValue($name){
-    if(isset($_POST[$name]) && $submitMessage != "SUCCESS"){ // clear form on successes
+    if(isset($_POST[$name]) && $submitMessage != "SUCCESS!"){ // clear form on successes
         echo $_POST[$name];
     }
 }
