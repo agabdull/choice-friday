@@ -19,7 +19,7 @@ if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SES
 $submitMessage = "";
     
 function getInputValue($name){
-    if(isset($_POST[$name]) && $submitMessage != "SUCCESS!"){ // clear form on successes
+    if(isset($_POST[$name]) && isset($_SESSION['submitSuccess']) && !$_SESSION['submitSuccess']){ // clear form on successes
         echo $_POST[$name];
     }
 }
@@ -35,6 +35,7 @@ if(isset($_POST['addButton'])){
     $maxGrade = $_POST['maxGrade'];
 
     if($minGrade > $maxGrade){
+        $_SESSION['submitSuccess'] = false;
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
         $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
@@ -43,8 +44,10 @@ if(isset($_POST['addButton'])){
         //echo $title . $admin . $description . $period . $minGrade . $maxGrade;
 
         if($result){
+            $_SESSION['submitSuccess'] = true;
             $submitMessage = "SUCCESS!";
         } else {
+            $_SESSION['submitSuccess'] = false;
             $submitMessage = "FAILURE: Insertion into database could not be completed";
         }
     }

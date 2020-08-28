@@ -17,6 +17,9 @@ if(isset($_SESSION['userEmail'])){
     $userFirstName = $_SESSION['userFirstName'];
 
     if ($userGrade == 0){
+        // did we just make a successful submit?  If so, set this session variable to true
+        // if we know we just came from a successful submit, then we can clear the form
+        $_SESSION['submitSuccess'] = false;
        header("Location: instructor.php");
     }
 
