@@ -46,6 +46,13 @@ if(isset($_SESSION['userEmail'])){
     $query = $pdo->query("SELECT title FROM choices WHERE period=1");
     $row = $query->fetchAll(PDO::FETCH_ASSOC);
     print_r($row);
+    
+    echo "Let's try something new!";
+
+    foreach ($row as $val){ 
+        echo $val;
+    }
+    
     ?>
 
 </body>
