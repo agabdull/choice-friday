@@ -43,14 +43,18 @@ if(isset($_SESSION['userEmail'])){
     <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
 
     <?php
-    $query = $pdo->query("SELECT title, description FROM choices WHERE period=1");
-    $row = $query->fetchAll(PDO::FETCH_ASSOC);
-    //print_r($row);
-    
-    //echo "Let's try something new!";
-    
-    foreach ($row as $val){ 
-        echo "<p> Title: " . $val['title'] . " Description: " . $val['description'] . "<br></p>";
+
+    for($i=1; $i<=8; $i++){
+        $query = $pdo->query("SELECT title, description FROM choices WHERE period='$i'");
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+        //print_r($row);
+        
+        //echo "Let's try something new!";
+        
+        foreach ($row as $val){ 
+            echo "<p> Title: " . $val['title'] . " Description: " . $val['description'] . "<br></p>";
+        }   
+        echo "<hr>"; // horizontal rule to separate periods
     }
 
     ?>
