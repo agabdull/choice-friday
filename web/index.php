@@ -41,5 +41,12 @@ if(isset($_SESSION['userEmail'])){
     <button class="button" onclick="logout()">LOG OUT</button>
 
     <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
+
+    <?php
+    $query = $pdo->query("SELECT title FROM choices WHERE period=1");
+    $row = $query->fetchAll(PDO::FETCH_ASSOC);
+    print_r($row);
+    ?>
+
 </body>
 </html>
