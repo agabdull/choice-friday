@@ -43,16 +43,16 @@ if(isset($_SESSION['userEmail'])){
     <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
 
     <?php
-    $query = $pdo->query("SELECT title FROM choices WHERE period=1");
+    $query = $pdo->query("SELECT title, description FROM choices WHERE period=1");
     $row = $query->fetchAll(PDO::FETCH_ASSOC);
-    print_r($row);
+    //print_r($row);
     
-    echo "Let's try something new!";
-
+    //echo "Let's try something new!";
+    
     foreach ($row as $val){ 
-        echo $val;
+        echo "<p> Title: " . $val['title'] . " Description: " . $val['description'] . "<br></p>";
     }
-    
+
     ?>
 
 </body>
