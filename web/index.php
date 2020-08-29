@@ -103,6 +103,11 @@ if(isset($_POST['chooseButton'])){
     for($i=1; $i<=8; $i++){
         $newChoice = $choiceArr[$i-1];
         $query = $pdo->query("SELECT students FROM choices WHERE title='$newChoice'");
+        if ($query){
+            echo "SUCESS!  Got students on the choice " . $newChoice;
+        } else {
+            echo "FAILURE: Could not get students on the choice " . $newChoice;
+        }
         $row = $query->fetch(PDO::FETCH_ASSOC);
         $arr = $row['students'];
         array_push($arr, $userEmail);
