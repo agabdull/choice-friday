@@ -44,11 +44,10 @@ $prevChoices = $row['choices'];
 function formatArr($arr){
     $arrFormatted = [];
     foreach($arr as $val){
-        array_push($choiceArrFormatted, "'" . pg_escape_string($val) . "'");
+        array_push($arrFormatted, "'" . pg_escape_string($val) . "'");
         // formatting for SQL query includes escaping problematic characters within titles
     }
-    $arrFormatted = implode(",",$arrFormatted);
-    $arrFormatted = "[" . $arrFormatted . "]";
+    $arrFormatted = "[" . implode(",",$arrFormatted) . "]";
     return $arrFormatted;
 }
 
