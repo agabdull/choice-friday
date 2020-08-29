@@ -6,6 +6,7 @@ if(isset($_SESSION['userEmail']) && isset($_SESSION['userGrade']) && isset($_SES
     if($_SESSION['userGrade'] != 0){  // Kid is trying to gain admin privileges unlawfully
         header("Location: index.php");
     } else {
+        $id = $_SESSION['userId'];  // we don't actually need the id of admins for anything...
         $userEmail = $_SESSION['userEmail'];
         $userFirstName = $_SESSION['userFirstName'];
     }
@@ -38,10 +39,13 @@ if(isset($_POST['addButton'])){
         $_SESSION['submitSuccess'] = false;
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
-        $result = $pdo->query("INSERT INTO choices(title, admin, description, period, mingrade, maxgrade, students) VALUES
-        ('$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade', array[]::text[])");
+        $result = $pdo->query("INSERT INTO choices(id, title, admin, description, period, mingrade, maxgrade) VALUES
+        (DEFAULT, '$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade'");
 
-        //echo $title . $admin . $description . $period . $minGrade . $maxGrade;
+        $query = $pdo->query("SELECT id FROM choices WHERE title='$title'");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $choiceId = $row['id'];
+        $pdo->query("CREATE TABLE choice".$choiceId."(userid INTEGER);");
 
         if($result){
             $_SESSION['submitSuccess'] = true;

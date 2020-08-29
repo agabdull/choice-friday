@@ -8,11 +8,13 @@ include("includes/config.php");
 if(isset($_SESSION['userEmail'])){
     $userEmail = $_SESSION['userEmail'];
 
-    $query = $pdo->query("SELECT grade, fname FROM users WHERE email='$userEmail'");
+    $query = $pdo->query("SELECT id, grade, fname FROM users WHERE email='$userEmail'");
     $row = $query->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['userId'] = $row['id'];
     $_SESSION['userGrade'] = $row['grade'];
     $_SESSION['userFirstName'] = $row['fname'];
 
+    $id = $_SESSION['userId'];
     $userGrade = $_SESSION['userGrade'];
     $userFirstName = $_SESSION['userFirstName'];
 
@@ -28,50 +30,19 @@ if(isset($_SESSION['userEmail'])){
 }
 
 
-
-function sqlStringtoArray($s){
-    // Big problem: We assume that the title has no commas
-
-    //$s = "{'a','b','c','d'}"; <----- of this form
-    if ($s == "{}" || $s=='{""}' || $s == "{''}"){
-        return [];
-    } else if (strpos($s, ',') === false){ // only one element (e.g. only one user enrolled in course)
-        $s = substr($s, 2);
-        $s = substr($s, 0, -2);
-        $arr = [$s];
-        return $arr;
-    } else{
-        $arr = explode(",", $s);
-        $n = count($arr);
-        
-        foreach($arr as &$val){
-            $val = substr($val, 1);
-            $val = substr($val, 0, -1);
-        }
-        
-        $arr[0] = substr($arr[0], 1);
-        $arr[$n-1] = substr($arr[$n-1], 0, -1);
-        
-        return $arr;
+$query = $pdo->query("SELECT p1, p2, p3, p4, p5, p6, p7, p8 FROM user$id WHERE email='$userEmail'"); 
+if ($query){
+    if ($query->rowCount() != 0){
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $prevChoices = [$row['p1'], $row['p2'], $row['p3'], $row['p4'], $row['p5'], $row['p6'], $row['p7'], $row['p8']];
+    } else {
+        $prevChoices = [];
     }
+    
+} else {
+    echo "FAILURE: Query for prevChoices failed";
 }
 
-
-function formatArr($arr){
-    $arrFormatted = [];
-    foreach($arr as $val){
-        array_push($arrFormatted, "'" . pg_escape_string($val) . "'");
-        // formatting for SQL query includes escaping problematic characters within titles
-    }
-    $arrFormatted = "[" . implode(",",$arrFormatted) . "]";
-    return $arrFormatted;
-}
-
-
-$query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-$row = $query->fetch(PDO::FETCH_ASSOC);
-$prevChoices = $row['choices'];
-$prevChoices = sqlStringtoArray($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
 // corresponding to the choices
@@ -79,81 +50,47 @@ $prevChoices = sqlStringtoArray($prevChoices);
 
 
 
-
 if(isset($_POST['chooseButton'])){
-    $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
-    $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
+    $choiceArr = [$_POST['choicePeriod1'],  $_POST['choicePeriod2'], $_POST['choicePeriod3'], $_POST['choicePeriod4'], 
+    $_POST['choicePeriod5'],  $_POST['choicePeriod6'], $_POST['choicePeriod7'], $_POST['choicePeriod8']];
 
-    //print_r($choiceArr);
 
-    
     // remove the user from his old choices
-    if($prevChoices[0] != ""){ // if no previous choices selected by user, then skip this
-        for($i=1; $i<8; $i++){
-            $prevChoice = pg_escape_string($prevChoices[$i-1]);
-            $query = $pdo->query("SELECT students FROM choices WHERE title='$prevChoice'");
-            $row = $query->fetch(PDO::FETCH_ASSOC);
-            $arr = $row['students'];
-            $arr = sqlStringtoArray($arr);  // student column returns from database as a string
-            $key = array_search($userEmail, $arr);
-            if ($key === false){
-                echo "ERROR: User enrollment desync.  Enrolled in userchoices table, but not in choices table \n";
-            } else {
-                array_splice($arr, 1, $key);
-            }
-
-            $arrFormatted = formatArr($arr);
-            $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$prevChoice'");
+    if($prevChoices !== []){  // if no previous choices selected by user, then skip this
+        for($i=1; $i<=8; $i++){
+            $prevChoice = $prevChoices[$i-1]; // $prevChoice is an INTEGER
+            $pdo->query("DELETE FROM choice$prevChoice WHERE userid='$id'");
         }
     }
+
 
     // we want to update $prevChoices ASAP so that the page refreshes with the new choices auto-selected
     $prevChoices = $choiceArr;
 
 
+
     // update userchoices
-    $choiceArrFormatted = formatArr($choiceArr);
-    $query = $pdo->query("UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'"); 
-    if ($query){
-        //echo "SUCCESS: Query to update userchoices";
-    } else {
-        echo "FAILURE: Query to update userchoices";
+    $pdo->query("DELETE FROM user$id"); // gets rid of previous choices
+    for($i=1;$i<=8;$i++){
+        $c1 = $choiceArr[0]; // these are all INTEGERS (userids)
+        $c2 = $choiceArr[1];
+        $c3 = $choiceArr[2];
+        $c4 = $choiceArr[3];
+        $c5 = $choiceArr[4];
+        $c6 = $choiceArr[5];
+        $c7 = $choiceArr[6];
+        $c8 = $choiceArr[7];
+        $pdo->query("INSERT INTO user$id (p1, p2, p3, p4, p5, p6, p7, p8) VALUES ($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8)");
     }
+    
 
 
-    
-    
     // add the user to each individual choice
     for($i=1; $i<=8; $i++){
-        $newChoice = pg_escape_string($choiceArr[$i-1]);
-        $query = $pdo->query("SELECT students FROM choices WHERE title='$newChoice'");
-        if ($query){
-            //echo "SUCESS!  Got students on the choice " . $newChoice;
-        } else {
-            echo "FAILURE: Could not get students on the choice " . $newChoice;
-        }
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        $arr = $row['students'];
-
-        //echo "Period $i: " . $newChoice . $arr . "\n";
-
-        $arr = sqlStringtoArray($arr); // student column returns from database as a string
-
-        //echo $arr . "\n";
-
-        array_push($arr, $userEmail);
-
-        //echo $arr . "\n";
-
-        $arrFormatted = formatArr($arr);
-
-        //echo $arrFormatted . "\n";
-
-        $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$newChoice'");
+        $newChoice = $choiceArr[$i-1];
+        $pdo->query("INSERT INTO choice$newChoice (userid) VALUES ($id)");
     }
-
 }
-
 
 
 ?>
@@ -191,16 +128,19 @@ if(isset($_POST['chooseButton'])){
             <hr> 
             <h3 class='text-center'>Period " . $i . "</h3> ";
             
-            $query = $pdo->query("SELECT title, description FROM choices WHERE period='$i'");
+            $query = $pdo->query("SELECT id, title, description FROM choices WHERE period='$i'");
             $row = $query->fetchAll(PDO::FETCH_ASSOC);
             
             foreach ($row as $val){ 
+                $choiceId = $val['id'];
+                $choiceReference = "choice" . $choiceId; // unique
                 $title = $val['title'];
-                $title = str_replace("'","&#39;",$title); // Should fix issue with single quotes
-                // TODO: replace other problematic characters
+
+                // The value of the input type should be the ID of the choice
+
                 $description = $val['description'];
-                echo "<input type='radio' id='". $title . $i . "' name='choice". $i . "' value='" . $title ."' required>
-                    <label for='" . $title . $i . "'> <b> " . $title . ": </b> <i> " . $description . "</i> </label>";
+                echo "<input type='radio' id='". $choiceReference . "' name='choicePeriod". $i . "' value='" . $choiceId ."' required>
+                    <label for='" . $choiceReference . "'> <b> " . $title . ": </b> <i> " . $description . "</i> </label>";
                 
             }   
             echo "</div>"; 
@@ -223,7 +163,7 @@ if(isset($_POST['chooseButton'])){
     if (previousChoices[0] !== ""){
         for(i=1; i<=8;i++){
             console.log(previousChoices[i-1] + i.toString());
-            document.getElementById(previousChoices[i-1] + i.toString()).checked = true;
+            document.getElementById("choice" + previousChoices[i-1]).checked = true;
         }
     }
 </script>
