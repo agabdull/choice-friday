@@ -47,7 +47,8 @@ function formatArr($arr){
         array_push($choiceArrFormatted, "'" . pg_escape_string($val) . "'");
         // formatting for SQL query includes escaping problematic characters within titles
     }
-    $arrFormatted = "[" . implode(",",$arrFormatted) . "]";
+    $arrFormatted = implode(",",$arrFormatted);
+    $arrFormatted = "[" . $arrFormatted . "]";
     return $arrFormatted;
 }
 
