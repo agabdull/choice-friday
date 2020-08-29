@@ -174,7 +174,7 @@ if(isset($_POST['chooseButton'])){
         </form>
 
     </div>
-    <?php print_r($prevChoices)?>
+    <?php print_r($prevChoices); echo gettype($prevChoices);?>
 </body>
 
 <script> 
