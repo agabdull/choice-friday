@@ -44,10 +44,6 @@ if(isset($_POST['chooseButton'])){
     $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
     $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
 
-    for($i=0;$i<=7;$i++){
-        $choiceArr[$i] = $choiceArr[$i]; // properly escape string for all future queries?
-    }
-
     print_r($choiceArr);
 
     /*
@@ -139,6 +135,7 @@ if(isset($_POST['chooseButton'])){
             
             foreach ($row as $val){ 
                 $title = $val['title'];
+                $title = str_replace("'","&#39;",$title); // Should fix issue with single quotes
                 $description = $val['description'];
                 echo "<input type='radio' id='". $title . $i . "' name='choice". $i . "' value='" . $title ."' required>
                     <label for='" . $title . $i . "'> <b> " . $title . ": </b> <i> " . $description . "</i> </label>";
