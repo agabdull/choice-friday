@@ -88,6 +88,7 @@ if(isset($_POST['chooseButton'])){
 
     // update userchoices
     $choiceArrFormatted = formatArr($choiceArr);
+    echo "UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'";
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'"); 
     if ($query){
         echo "SUCCESS: Query to update userchoices";
