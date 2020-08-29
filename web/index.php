@@ -33,7 +33,7 @@ function sqlStringtoArray($s){
     // Big problem: We assume that the title has no commas
 
     //$s = "{'a','b','c','d'}"; <----- of this form
-    if ($s == "{}"){
+    if ($s == "{}" || $s=='{""}' || $s == "{''}"){
         return [];
     } else if (strpos($s, ',') === false){ // only one element (e.g. only one user enrolled in course)
         $s = substr($s, 2);
@@ -135,19 +135,19 @@ if(isset($_POST['chooseButton'])){
         $row = $query->fetch(PDO::FETCH_ASSOC);
         $arr = $row['students'];
 
-        echo "Period $i: " . $newChoice . $arr . "\n";
+        //echo "Period $i: " . $newChoice . $arr . "\n";
 
         $arr = sqlStringtoArray($arr); // student column returns from database as a string
 
-        echo $arr . "\n";
+        //echo $arr . "\n";
 
         array_push($arr, $userEmail);
 
-        echo $arr . "\n";
+        //echo $arr . "\n";
 
         $arrFormatted = formatArr($arr);
 
-        echo $arrFormatted . "\n";
+        //echo $arrFormatted . "\n";
 
         $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$newChoice'");
     }
