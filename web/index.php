@@ -61,13 +61,10 @@ if(isset($_POST['chooseButton'])){
 
     
     // remove the user from his old choices
-    $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-    $row = $query->fetch(PDO::FETCH_ASSOC);
-    $oldChoices = $row['choices'];
-    if($oldChoices[0] != ""){ // if no previous choices selected by user, then skip this
+    if($prevChoices[0] != ""){ // if no previous choices selected by user, then skip this
         for($i=1; $i<8; $i++){
-            $oldChoice = pg_escape_string($oldChoices[$i-1]);
-            $query = $pdo->query("SELECT students FROM choices WHERE title='$oldChoice'");
+            $prevChoice = pg_escape_string($prevChoices[$i-1]);
+            $query = $pdo->query("SELECT students FROM choices WHERE title='$prevChoice'");
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $arr = $row['students'];
             $key = array_search($userEmail, $arr);
@@ -78,7 +75,7 @@ if(isset($_POST['chooseButton'])){
             }
 
             $arrFormatted = formatArr($arr);
-            $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$oldChoice'");
+            $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$prevChoice'");
         }
     }
 
@@ -184,9 +181,8 @@ if(isset($_POST['chooseButton'])){
     // we got the user's previous choices via an SQL query
     // now, we pass that php array into a short JS script
     // which automatically checks the user's previous choices
-    var previousChoices = <?php echo json_encode($prevChoices)?>;
+    const previousChoices = <?php echo json_encode($prevChoices)?>;
     console.log(previousChoices, typeof(previousChoices));
-    var previousChoicesArr = JSON.parse(previousChoices);
     if (previousChoices[0] !== ""){
         for(i=1; i<=8;i++){
             console.log(previousChoices[i-1] + i.toString());
