@@ -1,0 +1,66 @@
+.choiceBox {
+  background: rgba(0,0,0,0.2);
+  max-width: 30em;
+  color: pink;
+  border: 0.2em solid gray;
+  margin: auto;
+  padding: 0.4em;
+}
+
+body{
+    background: #0F3D5E;
+  }
+  .container{
+    max-width: 95%;
+  }
+
+  input[type=radio],
+  input[type=radio]:focus{
+    float: left;
+    display:block;
+    margin-top: 0.45em;
+    /*Vertically aligning radio buttons with labels*/
+  }
+
+  
+
+  .submitter {
+    background: #1D74B4;
+    color: white;
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.5em;
+    width: 8em;
+  }
+
+  #logoutButton {
+    position: absolute; 
+    top: 0; 
+    right: 0;
+    background: #383838;
+    color: white;
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.5em;
+    width: 6em;
+  }
+
+  .errormsg{
+    color: red;
+  }
+
+  p, div{
+    color: gray;
+  }
+
+  label{
+    color: gray;
+    display: block;
+    margin-left: 30px;
+  }
+
+  .choicePeriod{
+    margin: auto;
+    padding: 0.4em;
+    max-width: 30em;
+  }

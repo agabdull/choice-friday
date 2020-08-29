@@ -27,37 +27,136 @@ if(isset($_SESSION['userEmail'])){
     header("Location: register.php");
 }
 
+
+
+
+/*
+
+$query = $pdo->query(SELECT choices FROM userchoices WHERE email='$userEmail'); 
+$row = $query->fetch(PDO::FETCH_ASSOC);
+$prevChoices = $row['choices']
+print_r(prevChoices);
+
+// if prevChoices are valid, then we want to automatically select the boxes
+corresponding to the choices
+
+*/
+
+
+//DELETE THIS EVENTUALLY:
+$prevChoices = ["","","","","","","",""];
+
+
+
+if(isset($_POST['chooseButton'])){
+    $choiceArr = [$_POST['choice1'],  $_POST['choice2']];
+
+    print_r($choiceArr);
+
+    /* 
+
+    // remove the user from his old choices
+    $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
+    $row = $query->fetch(PDO:ASSOC);
+    $oldChoices = $row['choices'];
+    for($i=1; $i<8; i++){
+        $query = $pdo->query("SELECT students FROM choices WHERE title='$oldChoices[i-1]'");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $arr = $row['students'];
+        $key = array_search($userEmail, $arr);
+        array_splice($arr, 1, $key);
+
+        $pdo->query(UPDATE choices SET students='$arr' WHERE title='$choiceArr[i-1]');
+    }
+
+
+    // update userchoices
+    $pdo->query("UPDATE userchoices SET choices = '$choiceArr' WHERE email='$userEmail'"); 
+
+    
+    // add the user to each individual choice
+    for($i=1; $i<=8; $i++){
+        $query = $pdo->query("SELECT students FROM choices WHERE title='$choiceArr[i-1]'");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $arr = $row['students'];
+        array_push($arr, $userEmail);
+
+        $pdo->query(UPDATE choices SET students='$arr' WHERE title='$choiceArr[i-1]');
+    }
+    */
+}
+
+
+
 ?>
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choice Friday - Home</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/js/scripts.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/student.css">
+    <title>Choice Friday - Home</title>
 </head>
 <body>
-    <button class="button" onclick="logout()">LOG OUT</button>
+<div style="width: 100%; align: right;">
+    <button id="logoutButton" class="button submitter" onclick="logout()">Log out</button>
+</div>
 
     <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
 
-    <?php
 
-    for($i=1; $i<=8; $i++){
-        $query = $pdo->query("SELECT title, description FROM choices WHERE period='$i'");
-        $row = $query->fetchAll(PDO::FETCH_ASSOC);
-        //print_r($row);
-        
-        //echo "Let's try something new!";
-        
-        foreach ($row as $val){ 
-            echo "<p> Title: " . $val['title'] . " Description: " . $val['description'] . "<br></p>";
-        }   
-        echo "<hr>"; // horizontal rule to separate periods
-    }
+    <div class="container">
 
-    ?>
+    <header class="text-center text-light my-4">
+        <h1 class="mb-4">Choose Your Choices!</h1>
+    </header>
+
+
+        <form class="text-center my-4" id="chooseForm" action="index.php" method="POST">
+
+        <?php
+        for($i=1; $i<=8; $i++){
+            echo " <div class='choicePeriod text-light text-left'>
+            <hr> 
+            <h3 class='text-center'>Period 1</h3> ";
+            
+            $query = $pdo->query("SELECT title, description FROM choices WHERE period='$i'");
+            $row = $query->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($row as $val){ 
+                $title = $val['title'];
+                $description = $val['description'];
+                echo "<input type='radio' id='". $title . $i . "' name='choice". $i . "' value='" . $title ."' required>
+                    <label for='" . $title . $i . "'> <b> " . $title . ": </b> <i> " . $description . "</i> </label>";
+                
+            }   
+            echo "</div>"; 
+        }
+        ?>
+
+        <hr style="max-width: 30em;">
+        <button type="submit" name="chooseButton" class="submitter">Submit</button>
+
+        </form>
+
+    </div>
 
 </body>
+
+<script> 
+    // we got the user's previous choices via an SQL query
+    // now, we pass that php array into a short JS script
+    // which automatically checks the user's previous choices
+    const previousChoices = <?php echo json_encode($prevChoices)?>;
+    if (previousChoices[0] !== ""){
+        for(i=1; i<=8;i++){
+            console.log(previousChoices[i-1] + i.toString());
+            document.getElementById(previousChoices[i-1] + i.toString()).checked = true;
+        }
+    }
+</script>
+
 </html>
