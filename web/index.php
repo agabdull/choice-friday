@@ -33,10 +33,23 @@ if(isset($_SESSION['userEmail'])){
 $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
 $row = $query->fetch(PDO::FETCH_ASSOC);
 $prevChoices = $row['choices'];
-print_r($prevChoices);
+//print_r($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
 // corresponding to the choices
+
+
+
+
+function formatArr($arr){
+    $arrFormatted = [];
+    foreach($arr as $val){
+        array_push($choiceArrFormatted, "'" . pg_escape_string($val) . "'");
+        // formatting for SQL query includes escaping problematic characters within titles
+    }
+    $arrFormatted = "[" . implode(",",$arrFormatted) . "]";
+    return $arrFormatted;
+}
 
 
 
@@ -44,9 +57,9 @@ if(isset($_POST['chooseButton'])){
     $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
     $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
 
-    print_r($choiceArr);
+    //print_r($choiceArr);
 
-    /*
+    
     // remove the user from his old choices
     $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
     $row = $query->fetch(PDO::FETCH_ASSOC);
@@ -58,27 +71,31 @@ if(isset($_POST['chooseButton'])){
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $arr = $row['students'];
             $key = array_search($userEmail, $arr);
-            array_splice($arr, 1, $key);
+            if ($key === false){
+                echo "ERROR: User enrollment desync.  Enrolled in userchoices table, but not in choices table";
+            } else {
+                array_splice($arr, 1, $key);
+            }
 
-            
-            $pdo->query("UPDATE choices SET students='$arr' WHERE title='$oldChoice'");
+            $arrFormatted = formatArr($arr);
+            $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$oldChoice'");
         }
-    }*/
+    }
+
+
+
 
 
     // update userchoices
-    $choiceArrFormatted = [];
-    foreach ($choiceArr as $val){ 
-        array_push($choiceArrFormatted, "'" . pg_escape_string($val) . "'");
-        // formatting for SQL query includes escaping problematic characters within titles
-    }
-    $choiceArrImploded = implode(",",$choiceArrFormatted);
-    $query = $pdo->query("UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail'"); 
+    $choiceArrFormatted = formatArr($choiceArr);
+    $query = $pdo->query("UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'"); 
     if ($query){
         echo "SUCCESS: Query to update userchoices";
     } else {
         echo "FAILURE: Query to update userchoices";
     }
+
+
     
     /*
     // add the user to each individual choice
