@@ -67,7 +67,7 @@ if(isset($_POST['chooseButton'])){
 
 
     // update userchoices
-    $query = $pdo->query("UPDATE userchoices SET choices = '$choiceArr' WHERE email='$userEmail'"); 
+    $query = $pdo->query("UPDATE userchoices SET choices = 'ARRAY $choiceArr' WHERE email='$userEmail'"); 
     if ($query){
         echo "Query to update userchoices successful";
     } else {
