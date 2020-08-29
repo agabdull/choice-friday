@@ -46,6 +46,7 @@ if(isset($_POST['chooseButton'])){
 
     print_r($choiceArr);
 
+    /*
     // remove the user from his old choices
     $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
     $row = $query->fetch(PDO::FETCH_ASSOC);
@@ -62,13 +63,18 @@ if(isset($_POST['chooseButton'])){
             
             $pdo->query("UPDATE choices SET students='$arr' WHERE title='$oldChoice'");
         }
-    }
+    }*/
 
 
     // update userchoices
-    $pdo->query("UPDATE userchoices SET choices = '$choiceArr' WHERE email='$userEmail'"); 
-
+    $query = $pdo->query("UPDATE userchoices SET choices = '$choiceArr' WHERE email='$userEmail'"); 
+    if ($query){
+        echo "Query to update userchoices successful";
+    } else {
+        echo "Query to update userchoices unsuccessful";
+    }
     
+    /*
     // add the user to each individual choice
     for($i=1; $i<=8; $i++){
         $newChoice = $choiceArr[$i-1];
@@ -78,7 +84,7 @@ if(isset($_POST['chooseButton'])){
         array_push($arr, $userEmail);
 
         $pdo->query("UPDATE choices SET students='$arr' WHERE title='$newChoice'");
-    }
+    }*/
 
 }
 
