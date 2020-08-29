@@ -91,7 +91,7 @@ if(isset($_POST['chooseButton'])){
     echo "UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'";
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'"); 
     if ($query){
-        echo "SUCCESS: Query to update userchoices";
+        //echo "SUCCESS: Query to update userchoices";
     } else {
         echo "FAILURE: Query to update userchoices";
     }
@@ -104,7 +104,7 @@ if(isset($_POST['chooseButton'])){
         $newChoice = pg_escape_string($choiceArr[$i-1]);
         $query = $pdo->query("SELECT students FROM choices WHERE title='$newChoice'");
         if ($query){
-            echo "SUCESS!  Got students on the choice " . $newChoice;
+            //echo "SUCESS!  Got students on the choice " . $newChoice;
         } else {
             echo "FAILURE: Could not get students on the choice " . $newChoice;
         }
@@ -137,7 +137,7 @@ if(isset($_POST['chooseButton'])){
     <button id="logoutButton" class="button submitter" onclick="logout()">Log out</button>
 </div>
 
-    <p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>
+    <!--<p>Hello, <?php echo $userFirstName?>.  You are in grade <?php echo $userGrade . ", and your email address is " . $userEmail?></p>-->
 
 
     <div class="container">
@@ -185,6 +185,7 @@ if(isset($_POST['chooseButton'])){
     // now, we pass that php array into a short JS script
     // which automatically checks the user's previous choices
     const previousChoices = <?php echo json_encode($prevChoices)?>;
+    console.log(previousChoices);
     if (previousChoices[0] !== ""){
         for(i=1; i<=8;i++){
             console.log(previousChoices[i-1] + i.toString());
