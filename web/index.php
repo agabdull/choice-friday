@@ -31,8 +31,12 @@ if(isset($_SESSION['userEmail'])){
 
 
 $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-$row = $query->fetch(PDO::FETCH_ASSOC);
+$row = $query->fetchAll(PDO::FETCH_ASSOC);
+echo "Printing row:";
+print_r($row);
 $prevChoices = $row['choices'];
+echo "Printing prevchoices:";
+print_r($prevChoices);
 //print_r($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
