@@ -30,17 +30,17 @@ if(isset($_SESSION['userEmail'])){
 
 
 
-/*
 
-$query = $pdo->query(SELECT choices FROM userchoices WHERE email='$userEmail'); 
+
+$query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
 $row = $query->fetch(PDO::FETCH_ASSOC);
-$prevChoices = $row['choices']
-print_r(prevChoices);
+$prevChoices = $row['choices'];
+print_r($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
-corresponding to the choices
+// corresponding to the choices
 
-*/
+
 
 
 //DELETE THIS EVENTUALLY:
@@ -49,24 +49,27 @@ $prevChoices = ["","","","","","","",""];
 
 
 if(isset($_POST['chooseButton'])){
-    $choiceArr = [$_POST['choice1'],  $_POST['choice2']];
+    $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
+    $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
 
     print_r($choiceArr);
 
-    /* 
-
     // remove the user from his old choices
     $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-    $row = $query->fetch(PDO:ASSOC);
+    $row = $query->fetch(PDO::FETCH_ASSOC);
     $oldChoices = $row['choices'];
-    for($i=1; $i<8; i++){
-        $query = $pdo->query("SELECT students FROM choices WHERE title='$oldChoices[i-1]'");
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        $arr = $row['students'];
-        $key = array_search($userEmail, $arr);
-        array_splice($arr, 1, $key);
+    if($oldChoices[0] != ""){ // if no previous choices selected by user, then skip this
+        for($i=1; $i<8; $i++){
+            $oldChoice = $oldChoices[$i-1];
+            $query = $pdo->query("SELECT students FROM choices WHERE title='$oldChoice'");
+            $row = $query->fetch(PDO::FETCH_ASSOC);
+            $arr = $row['students'];
+            $key = array_search($userEmail, $arr);
+            array_splice($arr, 1, $key);
 
-        $pdo->query(UPDATE choices SET students='$arr' WHERE title='$choiceArr[i-1]');
+            
+            $pdo->query("UPDATE choices SET students='$arr' WHERE title='$oldChoice'");
+        }
     }
 
 
@@ -76,14 +79,15 @@ if(isset($_POST['chooseButton'])){
     
     // add the user to each individual choice
     for($i=1; $i<=8; $i++){
-        $query = $pdo->query("SELECT students FROM choices WHERE title='$choiceArr[i-1]'");
+        $newChoice = $choiceArr[$i-1];
+        $query = $pdo->query("SELECT students FROM choices WHERE title='$newChoice'");
         $row = $query->fetch(PDO::FETCH_ASSOC);
         $arr = $row['students'];
         array_push($arr, $userEmail);
 
-        $pdo->query(UPDATE choices SET students='$arr' WHERE title='$choiceArr[i-1]');
+        $pdo->query("UPDATE choices SET students='$arr' WHERE title='$newChoice'");
     }
-    */
+
 }
 
 
@@ -121,7 +125,7 @@ if(isset($_POST['chooseButton'])){
         for($i=1; $i<=8; $i++){
             echo " <div class='choicePeriod text-light text-left'>
             <hr> 
-            <h3 class='text-center'>Period 1</h3> ";
+            <h3 class='text-center'>Period " . $i . "</h3> ";
             
             $query = $pdo->query("SELECT title, description FROM choices WHERE period='$i'");
             $row = $query->fetchAll(PDO::FETCH_ASSOC);
