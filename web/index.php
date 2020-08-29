@@ -44,6 +44,10 @@ if(isset($_POST['chooseButton'])){
     $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
     $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
 
+    for($i=0;$i<=7;$i++){
+        $choiceArr[$i] = pg_escape_string($choiceArr[$i]); // properly escape string for all future queries?
+    }
+
     print_r($choiceArr);
 
     /*
@@ -72,14 +76,11 @@ if(isset($_POST['chooseButton'])){
         array_push($choiceArrFormatted, "'" . $val . "'");
     }
     $choiceArrImploded = implode(",",$choiceArrFormatted);
-    echo "<p> Imploded array: </p>" . $choiceArrImploded;
-
-    echo "<p> UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail' </p>";
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail'"); 
     if ($query){
-        echo "Query to update userchoices successful";
+        echo "SUCCESS: Query to update userchoices";
     } else {
-        echo "Query to update userchoices unsuccessful";
+        echo "FAILURE: Query to update userchoices";
     }
     
     /*
