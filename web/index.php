@@ -98,7 +98,7 @@ if(isset($_POST['chooseButton'])){
 
 
     
-    /*
+    
     // add the user to each individual choice
     for($i=1; $i<=8; $i++){
         $newChoice = $choiceArr[$i-1];
@@ -107,8 +107,9 @@ if(isset($_POST['chooseButton'])){
         $arr = $row['students'];
         array_push($arr, $userEmail);
 
-        $pdo->query("UPDATE choices SET students='$arr' WHERE title='$newChoice'");
-    }*/
+        $arrFormatted = formatArr($arr);
+        $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$newChoice'");
+    }
 
 }
 
