@@ -73,6 +73,8 @@ if(isset($_POST['chooseButton'])){
     }
     $choiceArrImploded = implode(",",$choiceArrFormatted);
     echo "<p> Imploded array: </p>" . $choiceArrImploded;
+
+    echo "<p> UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail' </p>";
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail'"); 
     if ($query){
         echo "Query to update userchoices successful";
