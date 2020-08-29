@@ -30,8 +30,6 @@ if(isset($_SESSION['userEmail'])){
 
 
 
-
-
 $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
 $row = $query->fetch(PDO::FETCH_ASSOC);
 $prevChoices = $row['choices'];
@@ -39,12 +37,6 @@ print_r($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
 // corresponding to the choices
-
-
-
-
-//DELETE THIS EVENTUALLY:
-$prevChoices = ["","","","","","","",""];
 
 
 
@@ -60,7 +52,7 @@ if(isset($_POST['chooseButton'])){
     $oldChoices = $row['choices'];
     if($oldChoices[0] != ""){ // if no previous choices selected by user, then skip this
         for($i=1; $i<8; $i++){
-            $oldChoice = $oldChoices[$i-1];
+            $oldChoice = pg_escape_string($oldChoices[$i-1]);
             $query = $pdo->query("SELECT students FROM choices WHERE title='$oldChoice'");
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $arr = $row['students'];
