@@ -101,7 +101,7 @@ if(isset($_POST['chooseButton'])){
     
     // add the user to each individual choice
     for($i=1; $i<=8; $i++){
-        $newChoice = $choiceArr[$i-1];
+        $newChoice = pg_escape_string($choiceArr[$i-1]);
         $query = $pdo->query("SELECT students FROM choices WHERE title='$newChoice'");
         if ($query){
             echo "SUCESS!  Got students on the choice " . $newChoice;
