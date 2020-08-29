@@ -28,6 +28,7 @@ if(isset($_SESSION['userEmail'])){
 }
 
 
+
 function sqlStringtoArray($s){
     //$s = "{'a','b','c','d'}"; <----- of this form
     $arr = explode(",", $s);
@@ -45,21 +46,6 @@ function sqlStringtoArray($s){
 }
 
 
-$query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-$row = $query->fetch(PDO::FETCH_ASSOC);
-$prevChoices = $row['choices'];
-print_r($prevChoices);
-
-$prevChoices = sqlStringtoArray($prevChoices);
-
-print_r($prevChoices);
-
-// if prevChoices are valid, then we want to automatically select the boxes
-// corresponding to the choices
-
-
-
-
 function formatArr($arr){
     $arrFormatted = [];
     foreach($arr as $val){
@@ -69,6 +55,17 @@ function formatArr($arr){
     $arrFormatted = "[" . implode(",",$arrFormatted) . "]";
     return $arrFormatted;
 }
+
+
+$query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
+$row = $query->fetch(PDO::FETCH_ASSOC);
+$prevChoices = $row['choices'];
+$prevChoices = sqlStringtoArray($prevChoices);
+
+// if prevChoices are valid, then we want to automatically select the boxes
+// corresponding to the choices
+
+
 
 
 
@@ -98,8 +95,8 @@ if(isset($_POST['chooseButton'])){
         }
     }
 
-
-
+    // we want to update $prevChoices ASAP so that the page refreshes with the new choices auto-selected
+    $prevChoices = $choiceArr;
 
 
     // update userchoices
