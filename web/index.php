@@ -83,6 +83,7 @@ if(isset($_POST['chooseButton'])){
             $query = $pdo->query("SELECT students FROM choices WHERE title='$prevChoice'");
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $arr = $row['students'];
+            $arr = sqlStringtoArray($arr);  // student column returns from database as a string
             $key = array_search($userEmail, $arr);
             if ($key === false){
                 echo "ERROR: User enrollment desync.  Enrolled in userchoices table, but not in choices table";
@@ -101,7 +102,6 @@ if(isset($_POST['chooseButton'])){
 
     // update userchoices
     $choiceArrFormatted = formatArr($choiceArr);
-    echo "UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'";
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY $choiceArrFormatted WHERE email='$userEmail'"); 
     if ($query){
         //echo "SUCCESS: Query to update userchoices";
@@ -123,6 +123,7 @@ if(isset($_POST['chooseButton'])){
         }
         $row = $query->fetch(PDO::FETCH_ASSOC);
         $arr = $row['students'];
+        $arr = sqlStringtoArray($arr); // student column returns from database as a string
         array_push($arr, $userEmail);
 
         $arrFormatted = formatArr($arr);
@@ -190,7 +191,6 @@ if(isset($_POST['chooseButton'])){
         </form>
 
     </div>
-    <?php print_r($prevChoices); echo gettype($prevChoices);?>
 </body>
 
 <script> 
@@ -198,7 +198,6 @@ if(isset($_POST['chooseButton'])){
     // now, we pass that php array into a short JS script
     // which automatically checks the user's previous choices
     const previousChoices = <?php echo json_encode($prevChoices)?>;
-    console.log(previousChoices, typeof(previousChoices));
     if (previousChoices[0] !== ""){
         for(i=1; i<=8;i++){
             console.log(previousChoices[i-1] + i.toString());
