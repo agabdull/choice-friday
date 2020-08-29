@@ -30,19 +30,30 @@ if(isset($_SESSION['userEmail'])){
 
 
 function sqlStringtoArray($s){
+    // Big problem: We assume that the title has no commas
+
     //$s = "{'a','b','c','d'}"; <----- of this form
-    $arr = explode(",", $s);
-    $n = count($arr);
-    
-    foreach($arr as &$val){
-        $val = substr($val, 1);
-        $val = substr($val, 0, -1);
+    if ($s == "{}"){
+        return [];
+    } else if (strpos($s, ',') === false){ // only one element (e.g. only one user enrolled in course)
+        $s = substr($s, 2);
+        $s = substr($s, 0, -2);
+        $arr = [$s];
+        return $arr;
+    } else{
+        $arr = explode(",", $s);
+        $n = count($arr);
+        
+        foreach($arr as &$val){
+            $val = substr($val, 1);
+            $val = substr($val, 0, -1);
+        }
+        
+        $arr[0] = substr($arr[0], 1);
+        $arr[$n-1] = substr($arr[$n-1], 0, -1);
+        
+        return $arr;
     }
-    
-    $arr[0] = substr($arr[0], 1);
-    $arr[$n-1] = substr($arr[$n-1], 0, -1);
-    
-    return $arr;
 }
 
 
@@ -86,7 +97,7 @@ if(isset($_POST['chooseButton'])){
             $arr = sqlStringtoArray($arr);  // student column returns from database as a string
             $key = array_search($userEmail, $arr);
             if ($key === false){
-                echo "ERROR: User enrollment desync.  Enrolled in userchoices table, but not in choices table";
+                echo "ERROR: User enrollment desync.  Enrolled in userchoices table, but not in choices table \n";
             } else {
                 array_splice($arr, 1, $key);
             }
