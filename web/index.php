@@ -69,7 +69,8 @@ if(isset($_POST['chooseButton'])){
     // update userchoices
     $choiceArrFormatted = [];
     foreach ($choiceArr as $val){ 
-        array_push($choiceArrFormatted, "'" . $val . "'");
+        array_push($choiceArrFormatted, "'" . pg_escape_string($val) . "'");
+        // formatting for SQL query includes escaping problematic characters within titles
     }
     $choiceArrImploded = implode(",",$choiceArrFormatted);
     $query = $pdo->query("UPDATE userchoices SET choices = ARRAY [$choiceArrImploded] WHERE email='$userEmail'"); 
@@ -136,6 +137,7 @@ if(isset($_POST['chooseButton'])){
             foreach ($row as $val){ 
                 $title = $val['title'];
                 $title = str_replace("'","&#39;",$title); // Should fix issue with single quotes
+                // TODO: replace other problematic characters
                 $description = $val['description'];
                 echo "<input type='radio' id='". $title . $i . "' name='choice". $i . "' value='" . $title ."' required>
                     <label for='" . $title . $i . "'> <b> " . $title . ": </b> <i> " . $description . "</i> </label>";
