@@ -42,10 +42,10 @@ print_r($prevChoices);
 
 if(isset($_POST['chooseButton'])){
     $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
-    $_POST['choice5'],  $_POST['choice6'], pg_escape_string($_POST['choice7']), $_POST['choice8']];
+    $_POST['choice5'],  $_POST['choice6'], add_slashes($_POST['choice7']), $_POST['choice8']];
 
     for($i=0;$i<=7;$i++){
-        $choiceArr[$i] = pg_escape_string($choiceArr[$i]); // properly escape string for all future queries?
+        $choiceArr[$i] = $choiceArr[$i]; // properly escape string for all future queries?
     }
 
     print_r($choiceArr);
