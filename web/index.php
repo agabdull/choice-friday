@@ -28,16 +28,31 @@ if(isset($_SESSION['userEmail'])){
 }
 
 
+function sqlStringtoArray($s){
+    //$s = "{'a','b','c','d'}"; <----- of this form
+    $arr = explode(",", $s);
+    $n = count($arr);
+    
+    foreach($arr as &$val){
+        $val = substr($val, 1);
+        $val = substr($val, 0, -1);
+    }
+    
+    $arr[0] = substr($arr[0], 1);
+    $arr[$n-1] = substr($arr[$n-1], 0, -1);
+    
+    return $arr;
+}
 
 
 $query = $pdo->query("SELECT choices FROM userchoices WHERE email='$userEmail'"); 
-$row = $query->fetchAll(PDO::FETCH_ASSOC);
-echo "Printing row:";
-print_r($row);
+$row = $query->fetch(PDO::FETCH_ASSOC);
 $prevChoices = $row['choices'];
-echo "Printing prevchoices:";
 print_r($prevChoices);
-//print_r($prevChoices);
+
+$prevChoices = sqlStringtoArray($prevChoices);
+
+print_r($prevChoices);
 
 // if prevChoices are valid, then we want to automatically select the boxes
 // corresponding to the choices
