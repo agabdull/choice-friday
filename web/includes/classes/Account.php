@@ -44,10 +44,11 @@
 
         private function insertUserDetails($em, $tp, $fn, $ln, $pw){
             $encryptedPw = md5($pw);
-            if($tp != 0){
-                $this->pdo->query("INSERT INTO userchoices(email, choices) VALUES ('$em', ARRAY ['', '', '', '', '', '', '', ''])");
-            }
-            $result = $this->pdo->query("INSERT INTO users(email, grade, fName, lName, password) VALUES('$em', '$tp', '$fn', '$ln', '$encryptedPw')");
+            $result = $this->pdo->query("INSERT INTO users(email, grade, fname, lname, password) VALUES('$em', '$tp', '$fn', '$ln', '$encryptedPw')");
+            $query = $this->pdo->query("SELECT id FROM users WHERE email='$em'");
+            $row = $query->fetch(PDO::FETCH_ASSOC);
+            $id = $row['id'];
+            $this->pdo->query("CREATE TABLE user$id(p1 INTEGER, p2 INTEGER, p3 INTEGER, p4 INTEGER, p5 INTEGER, p6 INTEGER, p7 INTEGER, p8 INTEGER);");
             return $result;
         }
 
