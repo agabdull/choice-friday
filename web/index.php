@@ -181,7 +181,9 @@ if(isset($_POST['chooseButton'])){
     // we got the user's previous choices via an SQL query
     // now, we pass that php array into a short JS script
     // which automatically checks the user's previous choices
-    const previousChoices = <?php echo json_encode($prevChoices)?>;
+    const previousChoicesString = <?php echo json_encode($prevChoices, JSON_FORCE_OBJECT)?>;
+    console.log(previousChoicesString, typeof(previousChoicesString));
+    const previousChoices = JSON.parse(previousChoicesString);
     console.log(previousChoices, typeof(previousChoices));
     if (previousChoices[0] !== ""){
         for(i=1; i<=8;i++){
