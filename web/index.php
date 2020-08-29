@@ -134,10 +134,21 @@ if(isset($_POST['chooseButton'])){
         }
         $row = $query->fetch(PDO::FETCH_ASSOC);
         $arr = $row['students'];
+
+        echo "Period $i: " . $newChoice . $arr . "\n";
+
         $arr = sqlStringtoArray($arr); // student column returns from database as a string
+
+        echo $arr . "\n";
+
         array_push($arr, $userEmail);
 
+        echo $arr . "\n";
+
         $arrFormatted = formatArr($arr);
+
+        echo $arrFormatted . "\n";
+
         $pdo->query("UPDATE choices SET students= ARRAY $arrFormatted WHERE title='$newChoice'");
     }
 
