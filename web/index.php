@@ -42,7 +42,7 @@ print_r($prevChoices);
 
 if(isset($_POST['chooseButton'])){
     $choiceArr = [$_POST['choice1'],  $_POST['choice2'], $_POST['choice3'], $_POST['choice4'], 
-    $_POST['choice5'],  $_POST['choice6'], add_slashes($_POST['choice7']), $_POST['choice8']];
+    $_POST['choice5'],  $_POST['choice6'], $_POST['choice7'], $_POST['choice8']];
 
     for($i=0;$i<=7;$i++){
         $choiceArr[$i] = $choiceArr[$i]; // properly escape string for all future queries?
