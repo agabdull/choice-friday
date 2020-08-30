@@ -30,7 +30,7 @@ if(isset($_SESSION['userEmail'])){
 }
 
 
-$query = $pdo->query("SELECT p1, p2, p3, p4, p5, p6, p7, p8 FROM user$id WHERE email='$userEmail'"); 
+$query = $pdo->query("SELECT p1, p2, p3, p4, p5, p6, p7, p8 FROM user$id"); 
 if ($query){
     if ($query->rowCount() != 0){
         $row = $query->fetch(PDO::FETCH_ASSOC);

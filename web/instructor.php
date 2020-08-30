@@ -40,7 +40,7 @@ if(isset($_POST['addButton'])){
         $submitMessage = "FAILURE: Invalid grade range";
     } else {
         $result = $pdo->query("INSERT INTO choices(id, title, admin, description, period, mingrade, maxgrade) VALUES
-        (DEFAULT, '$title', '$admin', '$description', '$period', '$minGrade', '$maxGrade'");
+        (DEFAULT, '$title', '$admin', '$description', $period, $minGrade, $maxGrade)");
 
         $query = $pdo->query("SELECT id FROM choices WHERE title='$title'");
         $row = $query->fetch(PDO::FETCH_ASSOC);
