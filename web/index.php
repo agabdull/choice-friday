@@ -71,17 +71,15 @@ if(isset($_POST['chooseButton'])){
 
     // update userchoices
     $pdo->query("DELETE FROM user$id"); // gets rid of previous choices
-    for($i=1;$i<=8;$i++){
-        $c1 = $choiceArr[0]; // these are all INTEGERS (userids)
-        $c2 = $choiceArr[1];
-        $c3 = $choiceArr[2];
-        $c4 = $choiceArr[3];
-        $c5 = $choiceArr[4];
-        $c6 = $choiceArr[5];
-        $c7 = $choiceArr[6];
-        $c8 = $choiceArr[7];
-        $pdo->query("INSERT INTO user$id (p1, p2, p3, p4, p5, p6, p7, p8) VALUES ($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8)");
-    }
+    $c1 = $choiceArr[0]; // these are all INTEGERS (userids)
+    $c2 = $choiceArr[1];
+    $c3 = $choiceArr[2];
+    $c4 = $choiceArr[3];
+    $c5 = $choiceArr[4];
+    $c6 = $choiceArr[5];
+    $c7 = $choiceArr[6];
+    $c8 = $choiceArr[7];
+    $pdo->query("INSERT INTO user$id (p1, p2, p3, p4, p5, p6, p7, p8) VALUES ($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8)");
     
 
 
